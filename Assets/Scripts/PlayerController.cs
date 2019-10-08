@@ -5,18 +5,25 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
-    public float jumpHeight;
-    private bool isGrounded;
 
-    public Transform top_left;
-    public Transform bottom_right;
-    public LayerMask ground_layers;
+    public float jumpHeight;
+    public Vector2 counterJumpForce;
+    private float jumpForce;
+    private bool isGrounded;
+    private bool isJumping;
+    private bool jumpKeyHeld;
+
+    public Transform topLeft;
+    public Transform bottomRight;
+    public LayerMask groundLayers;
 
     private Rigidbody2D rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        jumpForce = CalculateJumpForce(Physics2D.gravity.magnitude, jumpHeight);
     }
 
     void Update()
@@ -31,12 +38,32 @@ public class PlayerController : MonoBehaviour
         Vector2 movement = new Vector2(moveHorizontal, 0f);
         transform.Translate(movement * speed);
 
-        float jump = Input.GetAxisRaw("Jump");
-        isGrounded = Physics2D.OverlapArea(top_left.position, bottom_right.position, ground_layers);
-
-        if (jump == 1f && isGrounded)
+        isGrounded = Physics2D.OverlapArea(topLeft.position, bottomRight.position, groundLayers);
+        if (Input.GetAxisRaw("Jump") == 1f && isGrounded)
         {
-            rb.AddForce(new Vector2(0f, jumpHeight));
+            jumpKeyHeld = true;
+            rb.AddForce(Vector2.up * jumpForce * rb.mass, ForceMode2D.Impulse);
         }
+        else if (Input.GetAxisRaw("Jump") == 0f)
+        {
+            jumpKeyHeld = false;
+        }
+
+        if (isJumping)
+        {
+            if (!jumpKeyHeld && Vector2.Dot(rb.velocity, Vector2.up) > 0)
+            {
+                //TODO: Figure out why this isn't working
+                rb.AddForce(counterJumpForce * rb.mass);
+            }
+        }
+    }
+
+    public static float CalculateJumpForce(float gravityStrength, float jumpHeight)
+    {
+        //h = v^2/2g
+        //2gh = v^2
+        //sqrt(2gh) = v
+        return Mathf.Sqrt(2 * gravityStrength * jumpHeight);
     }
 }

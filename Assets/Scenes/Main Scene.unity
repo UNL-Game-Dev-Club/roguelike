@@ -725,10 +725,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
-  jumpHeight: 750
-  top_left: {fileID: 965657624}
-  bottom_right: {fileID: 801315331}
-  ground_layers:
+  jumpHeight: 5
+  counterJumpForce: {x: 0, y: -10}
+  topLeft: {fileID: 965657624}
+  bottomRight: {fileID: 801315331}
+  groundLayers:
     serializedVersion: 2
     m_Bits: 256
 --- !u!1 &2014062987
@@ -745,7 +746,7 @@ GameObject:
   - component: {fileID: 2014062991}
   - component: {fileID: 2014062990}
   - component: {fileID: 2014062989}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
