@@ -725,8 +725,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
-  jumpHeight: 5
-  counterJumpForce: {x: 0, y: -10}
+  jumpHeight: 7
+  counterJumpForce: {x: 0, y: -50}
   topLeft: {fileID: 965657624}
   bottomRight: {fileID: 801315331}
   groundLayers:
