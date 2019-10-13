@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     //private bool isJumping;
     private bool jumpKeyHeld;
 
-    public Transform topLeft;
+    public Transform bottomLeft;
     public Transform bottomRight;
     public LayerMask groundLayers;
 
@@ -58,9 +58,19 @@ public class PlayerController : MonoBehaviour
     //Handles jumping mechanics, including logic and applying forces
     private void HandleJumping()
     {
-        isGrounded = Physics2D.OverlapArea(topLeft.position, bottomRight.position, groundLayers);
+        RaycastHit2D leftRaycast = Physics2D.Raycast(bottomLeft.transform.position, Vector2.down, 0.1f, groundLayers);
+        RaycastHit2D rightRaycast = Physics2D.Raycast(bottomRight.transform.position, Vector2.down, 0.1f, groundLayers);
 
-        //TODO: Differentiate between contacting the wall or floor of an "ground" object
+        if (leftRaycast.collider != null || rightRaycast.collider != null)
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+
+        //TODO: Work out physics quirks
 
         if (Input.GetAxisRaw("Jump") == 1f && isGrounded)
         {
