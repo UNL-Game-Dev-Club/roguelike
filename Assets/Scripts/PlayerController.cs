@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
         //TODO: Work out physics quirks
 
-        if (Input.GetAxisRaw("Jump") == 1f && isGrounded)
+        if ((Input.GetAxisRaw("Jump") == 1f && isGrounded) && rb.velocity.y <= 0f)
         {
             jumpKeyHeld = true;
             rb.AddForce(Vector2.up * jumpForce * rb.mass, ForceMode2D.Impulse);
