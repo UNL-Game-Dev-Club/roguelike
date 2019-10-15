@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     //private bool isJumping;
     private bool jumpKeyHeld;
 
+    public Weapon currentWeapon;
+
     public Transform bottomLeft;
     public Transform bottomRight;
     public LayerMask groundLayers;
@@ -26,12 +28,21 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         jumpForce = CalculateJumpForce(Physics2D.gravity.magnitude, jumpHeight);
+
+        currentWeapon = transform.Find("Weapon").GetComponent<Weapon>();
     }
 
     //Called once per frame
     void Update()
     {
-        
+        if (Input.GetButtonDown("Fire1"))
+        {
+            currentWeapon.Attack1();
+        }
+        if (Input.GetButtonDown("Fire2"))
+        {
+            currentWeapon.Attack2();
+        }
     }
 
     //Called once per physics update, 50 times per second by default (independent of framerate)
