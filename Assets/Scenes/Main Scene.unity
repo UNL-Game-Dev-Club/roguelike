@@ -206,6 +206,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 0, z: -10}
+  mouseInput: 1
+  maxOffsetX: 5
+  maxOffsetY: 2
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

@@ -5,15 +5,25 @@ using UnityEngine;
 public class FollowCam : MonoBehaviour
 {
     public Vector3 offset;
+    public bool mouseInput;
+    public float maxOffsetX;
+    public float maxOffsetY;
     private GameObject player;
+
     void Start()
     {
         player = GameObject.Find("Player");
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (mouseInput)
+        {
+            float camOffsetX = Mathf.Lerp(-maxOffsetX, maxOffsetX, Input.mousePosition.x / Screen.width);
+            float camOffsetY = Mathf.Lerp(-maxOffsetY, maxOffsetY, Input.mousePosition.y / Screen.height);
+            offset.x = camOffsetX;
+            offset.y = camOffsetY;
+        }
         transform.position = player.transform.position + offset;
     }
 }
