@@ -18,11 +18,15 @@ public class GenerateLevel : MonoBehaviour
         rooms = Resources.LoadAll(path, typeof(GameObject));
         List<Room> level = new List<Room>();
 
-        Room room1 = ((GameObject)Instantiate(rooms[0])).GetComponent<Room>();
+        Room room1 = ((GameObject)Instantiate(rooms[1])).GetComponent<Room>();
         level.Add(room1);
 
         level.Add(PlaceRoom(rooms, room1, Opening.RIGHT));
-        level.Add(PlaceRoom(rooms, room1, Opening.LEFT));
+        for(int i = 1; i < 5; i++)
+        {
+            level.Add(PlaceRoom(rooms, level[i], Opening.RIGHT));
+        }
+        //level.Add(PlaceRoom(rooms, room1, Opening.LEFT));
 
         //TODO: Actually make this automagic
     }
