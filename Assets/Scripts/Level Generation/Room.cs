@@ -14,41 +14,13 @@ public class Room : MonoBehaviour
         switch (opening)
         {
             case Opening.TOP:
-                if (hasTop)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return hasTop;
             case Opening.BOTTOM:
-                if (hasBottom)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return hasBottom;
             case Opening.LEFT:
-                if (hasLeft)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return hasLeft;
             case Opening.RIGHT:
-                if (hasRight)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return hasRight;
             default:
                 return false;
         }
@@ -67,6 +39,28 @@ public class Room : MonoBehaviour
                 return rightPos;
             default:
                 return Vector3.zero;
+        }
+    }
+
+    public void SetOpening(Opening opening, bool value)
+    {
+        Debug.Log(opening);
+        switch (opening)
+        {
+            case Opening.TOP:
+                hasTop = value;
+                break;
+            case Opening.BOTTOM:
+                hasBottom = value;
+                break;
+            case Opening.LEFT:
+                hasLeft = value;
+                break;
+            case Opening.RIGHT:
+                hasRight = value;
+                break;
+            default:
+                break;
         }
     }
 

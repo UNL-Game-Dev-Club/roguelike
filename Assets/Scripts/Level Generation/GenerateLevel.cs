@@ -21,14 +21,43 @@ public class GenerateLevel : MonoBehaviour
         Room room1 = ((GameObject)Instantiate(rooms[1])).GetComponent<Room>();
         level.Add(room1);
 
-        level.Add(PlaceRoom(rooms, room1, Opening.RIGHT));
+        /*level.Add(PlaceRoom(rooms, room1, Opening.RIGHT));
         for(int i = 1; i < 5; i++)
         {
             level.Add(PlaceRoom(rooms, level[i], Opening.RIGHT));
-        }
-        //level.Add(PlaceRoom(rooms, room1, Opening.LEFT));
+        }*/
 
-        //TODO: Actually make this automagic
+        StartCoroutine(SlowGen(level));
+    }
+
+    IEnumerator SlowGen(List<Room> level)
+    {
+        bool generating = true;
+
+        while (generating)
+        {
+            List<Room> newRooms = new List<Room>();
+            foreach (Room room in level)
+            {
+                foreach (Opening opening in System.Enum.GetValues(typeof(Opening)))
+                {
+                    if (room.HasOpening(opening))
+                    {
+                        newRooms.Add(PlaceRoom(rooms, room, opening));
+                        room.SetOpening(opening, false);
+                        yield return new WaitForSecondsRealtime(2);
+                    }
+                }
+            }
+            foreach (Room room in newRooms)
+            {
+                level.Add(room);
+            }
+            if (level.Count >= 20)
+            {
+                generating = false;
+            }
+        }
     }
 
     private Room PlaceRoom(Object[] rooms, Room parentRoom, Opening opening)
@@ -44,7 +73,7 @@ public class GenerateLevel : MonoBehaviour
             }
         }
 
-        Room finalRoom = candidates[(int)Random.Range(0f, candidates.Count - 1)];
+        Room finalRoom = candidates[(int)Random.Range(0f, candidates.Count)];
         finalRoom = Instantiate(finalRoom);
 
         Vector3 roomOffset = finalRoom.transform.position - finalRoom.GetPos(OppositeOpening(opening));
