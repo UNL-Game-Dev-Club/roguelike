@@ -9,6 +9,25 @@ public class Room : MonoBehaviour
     public bool hasLeft = false;
     public bool hasRight = false;
 
+    public bool isColliding = false;
+
+    public Vector3 rightPos
+    {
+        get { return transform.Find("Right").gameObject.transform.position; }
+    }
+    public Vector3 leftPos
+    {
+        get { return transform.Find("Left").gameObject.transform.position; }
+    }
+    public Vector3 topPos
+    {
+        get { return transform.Find("Top").gameObject.transform.position; }
+    }
+    public Vector3 bottomPos
+    {
+        get { return transform.Find("Bottom").gameObject.transform.position; }
+    }
+
     public bool HasOpening(Opening opening)
     {
         switch (opening)
@@ -44,7 +63,6 @@ public class Room : MonoBehaviour
 
     public void SetOpening(Opening opening, bool value)
     {
-        Debug.Log(opening);
         switch (opening)
         {
             case Opening.TOP:
@@ -64,21 +82,12 @@ public class Room : MonoBehaviour
         }
     }
 
-    public Vector3 rightPos
+    private void OnCollisionEnter(Collision collision)
     {
-        get { return transform.Find("Right").gameObject.transform.position; }
-    }
-    public Vector3 leftPos
-    {
-        get { return transform.Find("Left").gameObject.transform.position; }
-    }
-    public Vector3 topPos
-    {
-        get { return transform.Find("Top").gameObject.transform.position; }
-    }
-    public Vector3 bottomPos
-    {
-        get { return transform.Find("Bottom").gameObject.transform.position; }
+        if (collision.gameObject.GetComponent<Room>() != null)
+        {
+            isColliding = true;
+        }
     }
 
     public int depth = 0;

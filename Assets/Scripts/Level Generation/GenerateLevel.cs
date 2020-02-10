@@ -21,17 +21,6 @@ public class GenerateLevel : MonoBehaviour
         Room room1 = ((GameObject)Instantiate(rooms[1])).GetComponent<Room>();
         level.Add(room1);
 
-        /*level.Add(PlaceRoom(rooms, room1, Opening.RIGHT));
-        for(int i = 1; i < 5; i++)
-        {
-            level.Add(PlaceRoom(rooms, level[i], Opening.RIGHT));
-        }*/
-
-        StartCoroutine(SlowGen(level));
-    }
-
-    IEnumerator SlowGen(List<Room> level)
-    {
         bool generating = true;
 
         while (generating)
@@ -43,9 +32,10 @@ public class GenerateLevel : MonoBehaviour
                 {
                     if (room.HasOpening(opening))
                     {
-                        newRooms.Add(PlaceRoom(rooms, room, opening));
+                        Room newRoom = PlaceRoom(rooms, room, opening);
+                        newRooms.Add(newRoom);
                         room.SetOpening(opening, false);
-                        yield return new WaitForSecondsRealtime(2);
+                        newRoom.SetOpening(OppositeOpening(opening), false);
                     }
                 }
             }

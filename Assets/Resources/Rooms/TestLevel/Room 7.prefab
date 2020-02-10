@@ -110,8 +110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d809e78ed1d031a40b5e841c5d33f491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasTop: 0
-  hasBottom: 1
+  hasTop: 1
+  hasBottom: 0
   hasLeft: 1
   hasRight: 0
   depth: 0
